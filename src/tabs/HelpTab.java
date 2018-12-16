@@ -1,3 +1,5 @@
+package tabs;
+
 import javafx.scene.control.Tab;
 
 public class HelpTab extends Tab {

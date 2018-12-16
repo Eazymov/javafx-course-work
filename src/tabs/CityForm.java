@@ -1,23 +1,26 @@
+package tabs;
+
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 
+import models.City;
+import controls.NumberField;
+
 public class CityForm extends HBox {
     private ObservableList<City> cities;
-    TextField xPosField = new NumberField();
-    TextField yPosField = new NumberField();
-    TextField cityNameField = new TextField();
-    Button addCityButton = new Button("Add city");
+    private TextField xPosField = new NumberField();
+    private TextField yPosField = new NumberField();
+    private TextField cityNameField = new TextField();
+    private Button addCityButton = new Button("Add city");
 
     public CityForm(ObservableList<City> cities) {
         this.cities = cities;
         this.setSpacing(10);
         this.getChildren().addAll(cityNameField, xPosField, yPosField, addCityButton);
 
-        cityNameField.setPromptText("City Name");
+        cityNameField.setPromptText("models.City Name");
         xPosField.setPromptText("X coordinate");
         yPosField.setPromptText("Y coordinate");
 
@@ -25,14 +28,12 @@ public class CityForm extends HBox {
         xPosField.setPrefWidth(90);
         yPosField.setPrefWidth(90);
 
-        addCityButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent event) {
-                City newCity = createCity();
+        addCityButton.setOnAction(e -> {
+            City newCity = createCity();
 
-                if (newCity != null) {
-                    cities.add(newCity);
-                    reset();
-                }
+            if (newCity != null) {
+                cities.add(newCity);
+                reset();
             }
         });
     }

@@ -7,13 +7,14 @@ import javafx.scene.control.TabPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import models.City;
+import tabs.CitiesTab;
+import tabs.HelpTab;
+import tabs.MapTab;
+import tabs.RoutesTab;
 
 public class Main extends Application {
-    private ObservableList<City> cities = FXCollections.observableArrayList(
-            new City("City 1", 0, 0),
-            new City("City 2", 10, 10),
-            new City("City 3", 20, 20)
-    );
+    private ObservableList<City> cities = FXCollections.observableArrayList();
 
     public static void main(String[] args) {
         Application.launch(args);
@@ -30,7 +31,7 @@ public class Main extends Application {
         MapTab mapTab = new MapTab();
         HelpTab helpTab = new HelpTab();
         RoutesTab routesTab = new RoutesTab();
-        CitiesTab citiesTab = new CitiesTab(this.cities);
+        CitiesTab citiesTab = new CitiesTab(primaryStage, this.cities);
 
         tabPane.getTabs().addAll(citiesTab, mapTab, routesTab, helpTab);
 
