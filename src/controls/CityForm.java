@@ -1,4 +1,4 @@
-package tabs;
+package controls;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
@@ -6,27 +6,26 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 
 import models.City;
-import controls.NumberField;
 
 public class CityForm extends HBox {
-    private ObservableList<City> cities;
-    private TextField xPosField = new NumberField();
-    private TextField yPosField = new NumberField();
-    private TextField cityNameField = new TextField();
-    private Button addCityButton = new Button("Add city");
+    private final ObservableList<City> cities;
+    private final TextField xPosField = new NumberField();
+    private final TextField yPosField = new NumberField();
+    private final TextField cityNameField = new TextField();
+    private final Button addCityButton = new Button("Добавить город");
 
     public CityForm(ObservableList<City> cities) {
         this.cities = cities;
         this.setSpacing(10);
         this.getChildren().addAll(cityNameField, xPosField, yPosField, addCityButton);
 
-        cityNameField.setPromptText("models.City Name");
-        xPosField.setPromptText("X coordinate");
-        yPosField.setPromptText("Y coordinate");
+        cityNameField.setPromptText("Название города");
+        xPosField.setPromptText("Координата X");
+        yPosField.setPromptText("Координата Y");
 
         cityNameField.setPrefWidth(250);
-        xPosField.setPrefWidth(90);
-        yPosField.setPrefWidth(90);
+        xPosField.setPrefWidth(95);
+        yPosField.setPrefWidth(95);
 
         addCityButton.setOnAction(e -> {
             City newCity = createCity();

@@ -4,7 +4,7 @@ import javafx.scene.control.Tab;
 
 public class RoutesTab extends Tab {
     public RoutesTab() {
-        this.setText("Routes");
+        this.setText("Маршрут");
         this.setClosable(false);
     }
 }

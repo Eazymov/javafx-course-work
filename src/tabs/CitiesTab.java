@@ -1,5 +1,6 @@
 package tabs;
 
+import controls.CityForm;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
@@ -23,12 +24,12 @@ import models.City;
 import enums.CityJsonFields;
 
 public class CitiesTab extends Tab {
-    private Stage stage;
-    private HBox header;
-    private CityForm cityForm;
-    private TableView<City> table;
-    private FileChooser jsonChooser;
-    private ObservableList<City> cities;
+    private final Stage stage;
+    private final HBox header;
+    private final CityForm cityForm;
+    private final TableView<City> table;
+    private final FileChooser jsonChooser;
+    private final ObservableList<City> cities;
 
     public CitiesTab(Stage stage, ObservableList<City> cities) {
         this.stage = stage;
@@ -42,17 +43,17 @@ public class CitiesTab extends Tab {
 
         layout.getChildren().addAll(this.header, this.table, this.cityForm);
 
-        this.setText("Cities list");
+        this.setText("Список городов");
         this.setClosable(false);
         this.setContent(layout);
     }
 
     private FileChooser createJsonChooser() {
         FileChooser jsonChooser = new FileChooser();
-        ExtensionFilter extFilter = new ExtensionFilter("JSON files","*.json");
+        ExtensionFilter extFilter = new ExtensionFilter("JSON файлы","*.json");
 
         jsonChooser.getExtensionFilters().add(extFilter);
-        jsonChooser.setTitle("Choose json");
+        jsonChooser.setTitle("Выберите json файл");
 
         return jsonChooser;
     }
@@ -70,32 +71,29 @@ public class CitiesTab extends Tab {
 
     private HBox createHeader() {
         HBox hBox = new HBox();
-        Label label = new Label("List of all cities");
-        Button delBtn = new Button("Remove city");
-        Button loadCitiesBtn = new Button("Load cities");
-        Button saveCitiesBtn = new Button("Save cities");
-
-        label.setFont(new Font("Arial", 20));
+        Button delBtn = new Button("Удалить выбранный");
+        Button loadCitiesBtn = new Button("Загрузить список");
+        Button saveCitiesBtn = new Button("Сохранить список");
 
         delBtn.setOnAction(e -> this.removeSelectedCity());
         loadCitiesBtn.setOnAction(e -> this.loadCitiesFromFile());
         saveCitiesBtn.setOnAction(e -> this.saveCitiesToFile());
 
         hBox.setSpacing(10);
-        hBox.getChildren().addAll(label, delBtn, loadCitiesBtn, saveCitiesBtn);
+        hBox.getChildren().addAll(delBtn, loadCitiesBtn, saveCitiesBtn);
 
         return hBox;
     }
 
     private TableView createTable() {
         TableView table = new TableView();
-        TableColumn cityNameColumn = new TableColumn("Name");
-        TableColumn xPosColumn = new TableColumn("X coordinate");
-        TableColumn yPosColumn = new TableColumn("Y coordinate");
+        TableColumn cityNameColumn = new TableColumn("Название");
+        TableColumn xPosColumn = new TableColumn("Координата X");
+        TableColumn yPosColumn = new TableColumn("Координата Y");
 
         cityNameColumn.setPrefWidth(250);
-        xPosColumn.setPrefWidth(100);
-        yPosColumn.setPrefWidth(100);
+        xPosColumn.setPrefWidth(105);
+        yPosColumn.setPrefWidth(105);
 
         cityNameColumn.setCellValueFactory(new PropertyValueFactory<City, String>("name"));
         xPosColumn.setCellValueFactory(new PropertyValueFactory<City, String>("posX"));

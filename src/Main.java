@@ -14,7 +14,7 @@ import tabs.MapTab;
 import tabs.RoutesTab;
 
 public class Main extends Application {
-    private ObservableList<City> cities = FXCollections.observableArrayList();
+    private final ObservableList<City> cities = FXCollections.observableArrayList();
 
     public static void main(String[] args) {
         Application.launch(args);
@@ -22,13 +22,13 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Shortest path finder");
+        primaryStage.setTitle("Найти кратчайший маршрут");
         Group root = new Group();
         Scene scene = new Scene(root, 700, 450, Color.WHITE);
         TabPane tabPane = new TabPane();
         BorderPane borderPane = new BorderPane();
 
-        MapTab mapTab = new MapTab();
+        MapTab mapTab = new MapTab(this.cities);
         HelpTab helpTab = new HelpTab();
         RoutesTab routesTab = new RoutesTab();
         CitiesTab citiesTab = new CitiesTab(primaryStage, this.cities);

@@ -4,9 +4,9 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class City {
-    private SimpleStringProperty name;
-    private SimpleIntegerProperty posX;
-    private SimpleIntegerProperty posY;
+    private final SimpleStringProperty name;
+    private final SimpleIntegerProperty posX;
+    private final SimpleIntegerProperty posY;
 
     public City(String name, int posX, int posY) {
         this.name = new SimpleStringProperty(name);
