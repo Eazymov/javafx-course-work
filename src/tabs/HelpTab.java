@@ -5,7 +5,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 
 public class HelpTab extends Tab {
     private final Font labelFont = new Font("Arial", 20);
@@ -62,18 +61,16 @@ public class HelpTab extends Tab {
     private VBox createMapHelp() {
         return this.createHelp(
             "Карта",
-            "       На этой вкладке показана карта на которой расположены все " +
-                "указанные города в соответствии с их координатами."
+            "       На этой вкладке показывается маршрут между городами, от начального до конечного."
         );
     }
 
     private VBox createRoutesHelp() {
         return this.createHelp(
             "Маршрут",
-            "       На этой вкладке строится маршрут между городами. Для " +
-                "этого в верхнем выпадающем списке нужно выбрать город с которого " +
-                "начинается путь, и нажать кнопку «Построить маршрут». Сохранить " +
-                "полученный маршрут в файл можно с помощью кнопки «Сохранить»"
+            "       На этой вкладке строится маршрут между городами. Для этого в выпадающих " +
+                    "списках нужно выбрать начальный и конечный города, после нажать кнопку «Построить маршрут». " +
+                    "Результат можно увидеть на вкладке «Карта»."
         );
     }
 }

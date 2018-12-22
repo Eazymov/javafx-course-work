@@ -12,14 +12,17 @@ import javafx.scene.text.Font;
 import models.City;
 import models.GraphBounds;
 
+import java.util.List;
+
 public class MapTab extends Tab {
     private final ObservableList<City> cities;
+    private List<City> shortestRoute;
 
-    public MapTab(ObservableList<City> cities) {
+    public MapTab(ObservableList<City> cities, List<City> shortestRoute) {
         this.cities = cities;
+        this.shortestRoute = shortestRoute;
         this.setText("Карта");
         this.setClosable(false);
-
         this.setOnSelectionChanged(e -> this.update());
     }
 
@@ -75,7 +78,7 @@ public class MapTab extends Tab {
         Integer maxX = Integer.MIN_VALUE;
         Integer minY = Integer.MAX_VALUE;
         Integer maxY = Integer.MIN_VALUE;
-        final Integer padding = 5;
+        final Integer padding = 2;
 
         for (City city : cities) {
             Integer posX = city.getPosX();

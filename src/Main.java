@@ -13,8 +13,12 @@ import tabs.HelpTab;
 import tabs.MapTab;
 import tabs.RoutesTab;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main extends Application {
     private final ObservableList<City> cities = FXCollections.observableArrayList();
+    private List<City> shortestRoute = new ArrayList();
 
     public static void main(String[] args) {
         Application.launch(args);
@@ -28,9 +32,9 @@ public class Main extends Application {
         TabPane tabPane = new TabPane();
         BorderPane borderPane = new BorderPane();
 
-        MapTab mapTab = new MapTab(this.cities);
+        MapTab mapTab = new MapTab(this.cities, this.shortestRoute);
         HelpTab helpTab = new HelpTab();
-        RoutesTab routesTab = new RoutesTab();
+        RoutesTab routesTab = new RoutesTab(this.cities, this.shortestRoute);
         CitiesTab citiesTab = new CitiesTab(primaryStage, this.cities);
 
         tabPane.getTabs().addAll(citiesTab, mapTab, routesTab, helpTab);
