@@ -15,15 +15,15 @@ import lib.ShortestRouteFinder;
 
 import java.util.List;
 
-public class RoutesTab extends Tab {
+public class RouteTab extends Tab {
     private final ObservableList<City> cities;
     private City firstCity;
     private City lastCity;
-    private List<City> shortestRoute;
+    private List<City> route;
 
-    public RoutesTab(ObservableList<City> cities, List<City> shortestRoute) {
+    public RouteTab(ObservableList<City> cities, List<City> route) {
         this.cities = cities;
-        this.shortestRoute = shortestRoute;
+        this.route = route;
         this.setText("Маршрут");
         this.setClosable(false);
         this.setContent(this.createLayout());
@@ -45,6 +45,14 @@ public class RoutesTab extends Tab {
 
         firstCitySelect.setPromptText("Начальный город");
         lastCitySelect.setPromptText("Конечный город");
+
+        if (this.firstCity != null) {
+            firstCitySelect.setValue(this.firstCity.getName());
+        }
+
+        if (this.lastCity != null) {
+            lastCitySelect.setValue(this.lastCity.getName());
+        }
 
         firstCitySelect.setOnAction(e -> this.handleFirstCityChange(firstCitySelect));
         lastCitySelect.setOnAction(e -> this.handleLastCityChange(lastCitySelect));
@@ -114,7 +122,7 @@ public class RoutesTab extends Tab {
         routeFinder.setFirstCity(this.firstCity);
         routeFinder.setLastCity(this.lastCity);
 
-        this.shortestRoute.clear();
-        this.shortestRoute.addAll(routeFinder.find());
+        this.route.clear();
+        this.route.addAll(routeFinder.find());
     }
 }

@@ -4,7 +4,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.ScatterChart;
+import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
@@ -16,11 +16,11 @@ import java.util.List;
 
 public class MapTab extends Tab {
     private final ObservableList<City> cities;
-    private List<City> shortestRoute;
+    private final List<City> route;
 
-    public MapTab(ObservableList<City> cities, List<City> shortestRoute) {
+    public MapTab(ObservableList<City> cities, List<City> route) {
         this.cities = cities;
-        this.shortestRoute = shortestRoute;
+        this.route = route;
         this.setText("Карта");
         this.setClosable(false);
         this.setOnSelectionChanged(e -> this.update());
@@ -32,7 +32,7 @@ public class MapTab extends Tab {
 
     private Node createLayout() {
         if (this.cities.size() > 1) {
-            return this.createGraph(this.cities);
+            return this.createGraph(this.cities, this.route);
         }
 
         return this.createFallback();
@@ -48,29 +48,49 @@ public class MapTab extends Tab {
         return label;
     }
 
-    private Node createGraph(ObservableList<City> cities) {
+    private Node createGraph(ObservableList<City> cities, List<City> route) {
         final GraphBounds graphBounds = this.getGraphBounds(cities);
         final NumberAxis xAxis = new NumberAxis(graphBounds.getMinX(), graphBounds.getMaxX(), 1);
         final NumberAxis yAxis = new NumberAxis(graphBounds.getMinY(), graphBounds.getMaxY(), 1);
-        final ScatterChart<Number, Number> scatterChart = new ScatterChart<>(xAxis, yAxis);
-        final XYChart.Series seriesCity = new XYChart.Series();
+        final LineChart<Number, Number> lineChart = new LineChart(xAxis, yAxis);
+        final XYChart.Series seriesCities = new XYChart.Series();
+        final Font labelFont = new Font("Arial", 12);
 
-        seriesCity.setName("Город");
+        seriesCities.setName("Город");
 
-        scatterChart.getXAxis().setTickMarkVisible(false);
-        scatterChart.getYAxis().setTickMarkVisible(false);
+        lineChart.getXAxis().setTickMarkVisible(false);
+        lineChart.getYAxis().setTickMarkVisible(false);
+        lineChart.setHorizontalZeroLineVisible(false);
+        lineChart.setVerticalZeroLineVisible(false);
+        lineChart.setLegendVisible(false);
+        lineChart.getData().addAll(seriesCities);
+        lineChart.lookup(".default-color0.chart-series-line").setStyle("-fx-stroke: transparent");
+
+        for (int idx = 1; idx < route.size(); idx++) {
+            City prevCity = route.get(idx - 1);
+            City curCity = route.get(idx);
+            XYChart.Series series = new XYChart.Series();
+            XYChart.Data firstDot = new XYChart.Data(prevCity.getPosX(), prevCity.getPosY());
+            XYChart.Data secondDot = new XYChart.Data(curCity.getPosX(), curCity.getPosY());
+            String selector = ".default-color" + idx + ".chart-series-line";
+
+            series.getData().addAll(firstDot, secondDot);
+            lineChart.getData().add(series);
+            lineChart.lookup(selector).setStyle("-fx-stroke: green");
+        }
 
         for (City city : cities) {
             final XYChart.Data data = new XYChart.Data(city.getPosX(), city.getPosY());
+            final Label label = new Label(city.getName());
 
-            data.setNode(new Label(city.getName()));
+            label.setFont(labelFont);
+            data.setNode(label);
+            data.getNode().toFront();
 
-            seriesCity.getData().add(data);
+            seriesCities.getData().add(data);
         }
 
-        scatterChart.getData().addAll(seriesCity);
-
-        return scatterChart;
+        return lineChart;
     }
 
     private GraphBounds getGraphBounds(ObservableList<City> cities) {

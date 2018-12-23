@@ -1,0 +1,10 @@
+[
+  { "posX": 0, "posY": -10, "name": "Vancouver" },
+  { "posX": 3, "posY": 3, "name": "Yellowknife" },
+  { "posX": 2, "posY": -4, "name": "Edmonton" },
+  { "posX": -6, "posY": -1, "name": "Calgary" },
+  { "posX": -5, "posY": 5, "name": "Winnipeg" },
+  { "posX": 4, "posY": -6, "name": "Toronto" },
+  { "posX": 4, "posY": 1, "name": "Montreal" },
+  { "posX": -6, "posY": 2, "name": "Halifax" }
+]
