@@ -1,41 +1,21 @@
 package lib;
 
 import models.City;
-import models.Ways;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ShortestRouteFinder {
-    private Ways ways;
     private City firstCity;
     private City lastCity;
     private List<City> cities;
 
-    /**
-     * Инициализирует значения по умолчанию
-     */
     public ShortestRouteFinder() {
         this.cities = new ArrayList<>();
-        this.ways = new Ways();
     }
 
-    /**
-     * Задает поле cities
-     *
-     * @param cities список городов
-     */
     public void setCities(List<City> cities) {
         this.cities = cities;
-    }
-
-    /**
-     * Задает поле waysList
-     *
-     * @param waysList набор всех путей между городами
-     */
-    public void setWays(Ways waysList) {
-        this.ways = waysList;
     }
 
     public void setFirstCity(City firstCity) {
@@ -46,11 +26,6 @@ public class ShortestRouteFinder {
         this.lastCity = lastCity;
     }
 
-    /**
-     * Находит длиннейший возможный путь
-     *
-     * @return {@code models.City<List>}
-     */
     public List<City> find() {
         List<City> cities = new ArrayList<>(this.cities);
         List<List<City>> allPaths = Helpers.getListPermutations(cities);
@@ -59,12 +34,6 @@ public class ShortestRouteFinder {
         return this.getShortestPath(filteredPaths);
     }
 
-    /**
-     * Возвращает длиннейший путь из списка переданных
-     *
-     * @param paths список путей
-     * @return {@code List<models.City>}
-     */
     private List<City> getShortestPath(List<List<City>> paths) {
         List<City> shortestPath = null;
         Integer lowestCost = Integer.MAX_VALUE;
@@ -109,13 +78,6 @@ public class ShortestRouteFinder {
         return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
     }
 
-    /**
-     * Возвращает отфильтрованный список состоящий из корректных неразрывных
-     * путей
-     *
-     * @param paths корректные пути
-     * @return {@code List<List<models.City>>}
-     */
     private List<List<City>> filterPaths(List<List<City>> paths) {
         List<List<City>> filteredPaths = new ArrayList<>();
 
